@@ -1,0 +1,16 @@
+{
+  "name": "guildfriends",
+  "version": "1.0.0",
+  "description": "the client for guildfriends",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "guildfriends",
+  "license": "ISC",
+  "dependencies": {
+    "google-protobuf": "^3.20.1",
+    "grpc": "^1.24.11"
+  },
+  "type": "module"
+}

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./../css/chat.css">
+    <title>Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+
+
+</head>
+
+<body style="background-color: rgb(240, 246, 255)">
+
+    <!--Canvas Chats & grupos-->
+    <div class="container-fluid" style="margin-top: 10px;">
+
+
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLeft" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasLeftLabel">Chats y grupos</h5>
+                <div class="position-relative text-center" >
+                    <button class=" btn btn-primary" data-bs-toggle="modal" data-bs-target="#createChat" onclick="GetUsers()">+Chat</button>
+                    <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#createGroup" onclick="GetUsers()">+Grupo</button>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+
+            <div class="offcanvas-body">
+
+                <div class="list-group" id="chat-List-group">
+                    <!-- <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">List group item heading</h5>
+                            <small>3 days ago</small>
+                        </div>
+                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">List group item heading</h5>
+                            <small class="text-muted">3 days ago</small>
+                        </div>
+                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">List group item heading</h5>
+                            <small class="text-muted">3 days ago</small>
+                        </div>
+                        <p class="mb-1">Some placeholder content in a paragraph.</p>
+                    </a> -->
+                </div>
+<!--
+                <scroll-container>
+                    <div class="containerA" id="chatsList"></div>
+                </scroll-container>
+
+                <div class="container" id="chatsList"></div> -->
+            </div>
+        </div>
+        <!--End canvas chats & grupos-->
+
+        <!--Canvas Friends-->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasRightLabel">Amigos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="d-grid gap-2 position-relative top-100 start-50 translate-middle">
+                    <button class="addChat btn btn-primary">+</button>
+                </div>
+            </div>
+        </div>
+        <!--End canvas friends-->
+        <div  class="row g-3 mainChat">
+            <div class="chat_window col-sm-9  shadow-lg" >
+                <div class="top_menu">
+                    <div class="buttons">
+                        <div class="button close"></div>
+                        <div class="button minimize"></div>
+                        <div class="button maximize"></div>
+                    </div>
+                    <div class="title" >
+                        <h5 id="titleChatWindow">Chat</h5>
+                    </div>
+                </div>
+                <ul class="messages" id="messagesAreas">
+                    
+                </ul>
+                <div class="bottom_wrapper clearfix">
+                    <div class="message_input_wrapper">
+                        <input class="message_input"
+                            placeholder="Type your message here..." id="messageInput"/>
+                    </div>
+                    <button class="send_message" onclick="SendMessage()">
+                        <div class="icon"></div>
+                        <div class="text">Send</div>
+                    </button>
+                </div>
+            </div>
+            <!-- <div class="message_template">
+                <li class="message">
+                    <div class="avatar"></div>
+                    <div class="text_wrapper">
+                        <div class="text"></div>
+                    </div>
+                </li>
+            </div> -->
+
+
+            <scroll-container class="col" >
+
+                <div style="margin-right: 1%; margin-left: 4px;">
+                    <div class="list-group" id="guild-list-group">
+                    </div>
+                </div>
+            </scroll-container>
+        </div>
+
+
+        <nav class="navbar navbar-expand-lg bg-light shadow myNavBar">
+            <div class="container-fluid" style="margin-right: 18px;">
+                <a class="navbar-brand" href="">Guild friends</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarScroll">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 150px;">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Friends</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="">Guilds</a>
+                        </li>
+
+                    </ul>
+                    <button class="shadow myButton" ype="button" data-bs-toggle="modal" data-bs-target="#InvitationList">
+                        <span class="fa-solid fa-user-group" ></span>
+                    </button>
+                    <div style="margin-right:4px;margin-bottom:24px;">                            
+                        <span class="badge bg-primary rounded-pill" id="numberOfRequest"></span>
+                    </div>
+                    <button class=" shadow myButton"  type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLeft" style="margin-right: 28px;"
+                        aria-controls="offcanvasLeft">
+                        <span class="fa-brands fa-rocketchat"></span>
+                    </button>
+                    <button class=" shadow myButton" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                        aria-controls="offcanvasRight">
+                        <span class="fa-solid fa-user-plus"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" style="margin-left: 28px; margin-right: 18px;" id="">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 200px;">
+                    <li class="nav-item dropdown ">
+                        <a class="nav-link dropdown-toggle " href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#createGuild" >Crear guild</a></li>
+                            <li><a class="dropdown-item">Añadir amigo</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+    <div id="createChat" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img class="user" src="https://i.ibb.co/yVGxFPR/2.png" height="30px">
+                    <h5 class="modal-title">Nuevo chat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="chatName" placeholder="chatName">
+                        <label for="chatName">Chat name</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <h5 class="col">Choice a user</h5>
+                    <button onclick="SaveChat()" type="button" class="btn btn-outline-primary col-2" name="btnLog" form="formChat"
+                    id="saveChatButton">Aceptar</button>
+                </div>
+                <scroll-container style="max-height: 500px; width: 100%;">
+                    <div style="margin-right: 1%; margin-left: 4px;">
+                        <div class="list-group list-group-flush mb-3" id="userstochat-list-group" >
+                        </div>
+                    </div>
+                </scroll-container>
+            </div>
+        </div>
+    </div>
+    <div id="createGroup" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img class="user" src="https://i.ibb.co/yVGxFPR/2.png" height="30px">
+                    <h5 class="modal-title">Nuevo chat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="groupName" placeholder="groupName">
+                        <label for="groupName">Group name</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="maxUsers" placeholder="maxUsers">
+                        <label for="maxUsers">Max users</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <h5 class="col">Choice a user to participate</h5>
+                    <button onclick="saveGroup()" type="button" class="btn btn-outline-primary col-2" name="btnLog" form="formChat"
+                    id="saveChatButton">Aceptar</button>
+                </div>
+                <scroll-container style="max-height: 500px; width: 100%;">
+                    <div style="margin-right: 1%; margin-left: 4px;">
+
+                        <div class="list-group list-group-flush mb-3" id="userstogroup-list-group" >
+                        </div>
+                    </div>
+                </scroll-container>
+            </div>
+        </div>
+    </div>
+
+    <div id="createGuild" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body" id="body-new-guild">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="GuildName" placeholder="groupName">
+                        <label for="groupName">Guild name</label>
+                    </div>
+                    <div class="photo">
+                        <label for="foto">Foto (570x380)</label>
+                        <div class="prevPhoto">
+                          <span class="delPhoto notBlock">X</span>
+                          <label for="foto"></label>
+                          <div>
+                            <img id="img" src="./../images/subir.png">
+                          </div>
+                        </div>
+                        <div class="upimg">
+                          <input type="file" name="foto" id="foto">
+                        </div>
+                        <div id="form_alert"></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button onclick="SaveGuild()" type="button" class="btn btn-outline-primary col-2" name="btnLog" form="formChat"
+                    id="saveChatButton">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div><div class="modal fade" id="InvitationList" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Guild request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3" >
+                        <div class="border-top border-bottom">
+                            <scroll-container style="max-height: 300px; width: 100%;">
+                                <div style="margin-right: 1%; margin-left: 4px;">
+                                    <div class="list-group list-group-flush mb-3" id="guidRequest" >
+                                    </div>
+                                </div>
+                            </scroll-container>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+
+    <script src="https://kit.fontawesome.com/5167121459.js" crossorigin="anonymous"></script>
+
+    <script src="./../api/chat.js"></script>
+
+    <!-- <script src="./../client/client.js"></script> -->
+    
+</body>
+
+</html>

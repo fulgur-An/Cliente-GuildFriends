@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package GuildFriendsChat;
+
+service ChatService {
+  rpc join(RequestJoin) returns (ResponseJoin){}
+  rpc send(stream RequestSend) returns (stream ResponseSend){}
+}
+
+message Message {
+  string username = 1;
+  string text = 2;
+}
+
+message User {
+  int32 id = 1;
+  string name = 2;
+}
+
+message RequestJoin {
+  User user = 1;
+}
+
+message ResponseJoin{
+  string result = 1;
+}
+
+message RequestSend {
+  Message message = 1;
+}
+
+message ResponseSend {
+  string result = 1;
+}
